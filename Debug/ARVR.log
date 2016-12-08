@@ -1,26 +1,30 @@
-﻿빌드 시작: 2016-11-29 오후 12:49:06
-     1>2 노드의 "C:\Users\Hyeonwook\documents\visual studio 2010\Projects\ARVR\ARVR\ARVR.vcxproj" 프로젝트(build 대상)입니다.
+﻿빌드 시작: 2016-12-09 오전 1:26:51
+     1>2 노드의 "C:\Users\Hyeonwook\Documents\Visual Studio 2010\Projects\ARVR\ARVR\ARVR.vcxproj" 프로젝트(build 대상)입니다.
      1>InitializeBuildStatus:
-         "AlwaysCreate"이(가) 지정되었기 때문에 "Debug\ARVR.unsuccessfulbuild"을(를) 만들고 있습니다.
+         "Debug\ARVR.unsuccessfulbuild"에 연결(touching)하고 있습니다.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Users\Hyeonwook\Desktop\opencv210\opencv\build\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt arvr.cpp
          arvr.cpp
+     1>c:\users\hyeonwook\desktop\opencv210\opencv\build\include\opencv2\flann\dist.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+     1>c:\users\hyeonwook\desktop\opencv210\opencv\build\include\opencv2\flann\dist.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+     1>c:\users\hyeonwook\desktop\opencv210\opencv\build\include\opencv2\flann\dist.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+     1>c:\users\hyeonwook\desktop\opencv210\opencv\build\include\opencv2\flann\dist.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
        ManifestResourceCompile:
          모든 출력이 최신 상태입니다.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Hyeonwook\documents\visual studio 2010\Projects\ARVR\Debug\ARVR.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Hyeonwook\Desktop\opencv210\opencv\build\x86\vc10\lib opencv_calib3d2410d.lib opencv_contrib2410d.lib opencv_core2410d.lib opencv_features2d2410d.lib opencv_flann2410d.lib opencv_gpu2410d.lib opencv_highgui2410d.lib opencv_imgproc2410d.lib opencv_legacy2410d.lib opencv_ml2410d.lib opencv_nonfree2410d.lib opencv_objdetect2410d.lib opencv_photo2410d.lib opencv_stitching2410d.lib opencv_ts2410d.lib opencv_video2410d.lib opencv_videostab2410d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\ARVR.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Hyeonwook\documents\visual studio 2010\Projects\ARVR\Debug\ARVR.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Hyeonwook\documents\visual studio 2010\Projects\ARVR\Debug\ARVR.lib" /MACHINE:X86 Debug\ARVR.exe.embed.manifest.res
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Hyeonwook\Documents\Visual Studio 2010\Projects\ARVR\Debug\ARVR.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Hyeonwook\Desktop\opencv210\opencv\build\x86\vc10\lib opencv_calib3d2410d.lib opencv_contrib2410d.lib opencv_core2410d.lib opencv_features2d2410d.lib opencv_flann2410d.lib opencv_gpu2410d.lib opencv_highgui2410d.lib opencv_imgproc2410d.lib opencv_legacy2410d.lib opencv_ml2410d.lib opencv_nonfree2410d.lib opencv_objdetect2410d.lib opencv_photo2410d.lib opencv_stitching2410d.lib opencv_ts2410d.lib opencv_video2410d.lib opencv_videostab2410d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\ARVR.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Hyeonwook\Documents\Visual Studio 2010\Projects\ARVR\Debug\ARVR.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Hyeonwook\Documents\Visual Studio 2010\Projects\ARVR\Debug\ARVR.lib" /MACHINE:X86 Debug\ARVR.exe.embed.manifest.res
          Debug\arvr.obj
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\ARVR.exe.embed.manifest" /manifest Debug\ARVR.exe.intermediate.manifest
          모든 출력이 최신 상태입니다.
        LinkEmbedManifest:
          모든 출력이 최신 상태입니다.
-         ARVR.vcxproj -> C:\Users\Hyeonwook\documents\visual studio 2010\Projects\ARVR\Debug\ARVR.exe
+         ARVR.vcxproj -> C:\Users\Hyeonwook\Documents\Visual Studio 2010\Projects\ARVR\Debug\ARVR.exe
        FinalizeBuildStatus:
          "Debug\ARVR.unsuccessfulbuild" 파일을 삭제하고 있습니다.
          "Debug\ARVR.lastbuildstate"에 연결(touching)하고 있습니다.
-     1>"C:\Users\Hyeonwook\documents\visual studio 2010\Projects\ARVR\ARVR\ARVR.vcxproj" 프로젝트를 빌드했습니다(build 대상).
+     1>"C:\Users\Hyeonwook\Documents\Visual Studio 2010\Projects\ARVR\ARVR\ARVR.vcxproj" 프로젝트를 빌드했습니다(build 대상).
 
 빌드했습니다.
 
-경과 시간: 00:00:01.27
+경과 시간: 00:00:01.28

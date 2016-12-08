@@ -1,105 +1,185 @@
-﻿#include <opencv2\highgui\highgui.hpp>
-#include <opencv2\opencv.hpp>
+﻿
+
+#include "opencv/cv.h"
+#include "opencv/highgui.h"
 #include <iostream>
-using namespace std;
-using namespace cv;
+#include <cmath>
 
-Mat img, gRGB, gYCrCb, grayImg, grayAddImg, skinMask, hand, aMask, bMask, cMask;
+#define pi 3.141592653589793238462643383279
 
-int getWhiteCount(Mat &grayImg);
-void splitMask();
+cv::Mat gMatImage,gMatFlipImage;
+bool select_flag = false;
+cv::Point point1, point2;
+cv::Mat frame;
+bool callback = false;
 
+int drag = 0;
+CvRect box;
 
-int main() {
-	VideoCapture vc; //0번웹캠 초기화
-    if (!vc.isOpened())
-		return 0; // 연결실패
+void Yreflect( ){
+			
+	for(int i=0; i< gMatImage.cols; i++){
+		for(int j=0; j< gMatImage.rows; j++){
 
-    
-	vector<Mat> YCrCb;
-	Rect roiRect = Rect(0, 0, 300, 300);
-	aMask = Mat(300, 300, CV_8UC3);
-	bMask = Mat(300, 300, CV_8UC3);
-	cMask = Mat(300, 300, CV_8UC3);
-
-	splitMask();
-
-    while (1) {
-        vc >> img;
-        if (img.empty())
-			break;
-		cv::rectangle(img, roiRect, Scalar(0, 0, 255), 2);
-		Mat roi = img(roiRect);
+		gMatFlipImage.at <cv ::Vec3b > (j,i) =  gMatImage.at <cv::Vec3b> (j,i);
 		
-		cv::cvtColor(roi, gRGB, CV_BGRA2BGR);
-		cv::cvtColor(gRGB, gYCrCb, CV_BGR2YCrCb);
-
-		cv::split(gYCrCb, YCrCb);
-
-		inRange(YCrCb[2], Scalar(77), Scalar(150), YCrCb[2]);
-		inRange(YCrCb[1], Scalar(133), Scalar(173), YCrCb[1]);
-		
-		cv::bitwise_and(YCrCb[1], YCrCb[2], grayImg);
-		
-		cv::cvtColor(grayImg, skinMask, CV_GRAY2BGR);
-
-		cv::bitwise_and(skinMask, roi, hand);
-		
-		//범위에서 pixel이 흰색인 개수를 가지고 옵니다.
-		int whitecount = getWhiteCount(grayImg);
-		
-		//흰색 pixel의 수가 10000개~15000개면 바위로 판별합니다.
-		if(whitecount > 10000 && whitecount <15000){
-			printf("바위\n");
-			cv::bitwise_and(aMask, skinMask, hand);
-		}//흰색 pixel의 수가 15000개~20000개면 가위로 판별합니다.
-		else if(whitecount > 15000 && whitecount <20000){
-			printf("가위\n");
-			cv::bitwise_and(bMask, skinMask, hand);
-		}//흰색 pixel의 수가 20000개~30000개면 보자기로 판별합니다.
-		else if(whitecount >= 20000 && whitecount <30000){
-			printf("보\n");
-			cv::bitwise_and(cMask, skinMask, hand);
-		}
-		
-		imshow("roi", roi);
-        imshow("cam", img);
-		imshow("gray", grayImg);
-		imshow("hand", hand);
-        if (waitKey(10) == 27)
-			break; //ESC키 눌리면 종료
-    }
-    destroyAllWindows();
-    return 0;
-}
-
-int getWhiteCount(Mat &grayImg){
-	int whitecount=0; //white pixel의 개수를 0으로 초기화 합니다.
-		for(int i=0; i<grayImg.cols; i++){
-			for(int j=0; j<grayImg.rows; j++){
-				int value = grayImg.at<uchar>(i,j);
-				if(value==255){//해당 pixel이 흰색이면 white pixel의 개수를 1추가합니다. 
-					whitecount++;
-				}
-			}
-		}
-	//white pixel의 개수를 반환합니다.
-	return whitecount;
-}
-void splitMask() {
-	for (int i = 0; i < aMask.rows; i++) {
-		for (int j = 0; j < aMask.cols; j++) {
-			aMask.at<Vec3b>(i, j)[0] = 0;
-			aMask.at<Vec3b>(i, j)[1] = 0;
-			aMask.at<Vec3b>(i, j)[2] = 255;
-
-			bMask.at<Vec3b>(i, j)[0] = 0;
-			bMask.at<Vec3b>(i, j)[1] = 255;
-			bMask.at<Vec3b>(i, j)[2] = 0;
-
-			cMask.at<Vec3b>(i, j)[0] = 255;
-			cMask.at<Vec3b>(i, j)[1] = 0;
-			cMask.at<Vec3b>(i, j)[2] = 0;
 		}
 	}
+	for(int i=point1.x; i< point2.x; i++){
+		for(int j=point1.y; j< point2.y; j++){
+
+		gMatFlipImage.at <cv ::Vec3b > (j,i) =  gMatImage.at <cv::Vec3b> (j,(point2.x-1)-i+point1.x);
+		
+		}
+	}
+	cv::rectangle(gMatFlipImage, point1, point2, CV_RGB(0, 255, 0), 3, 8, 0);
+	cv::namedWindow("Yreflect");
+	cv::imshow("Yreflect",gMatFlipImage);
+}
+void Xreflect( ){
+			
+	for(int i=0; i< gMatImage.cols; i++){
+		for(int j=0; j< gMatImage.rows; j++){
+
+		gMatFlipImage.at <cv ::Vec3b > (j,i) =  gMatImage.at <cv::Vec3b> (j,i);
+		
+		}
+	}
+	for(int i=point1.x; i< point2.x; i++){
+		for(int j=point1.y; j< point2.y; j++){
+
+		gMatFlipImage.at <cv ::Vec3b > (j,i) =  gMatImage.at <cv::Vec3b> ((point2.y-1)-j+point1.y,i);
+		
+		}
+	}
+	cv::rectangle(gMatFlipImage, point1, point2, CV_RGB(0, 255, 0), 3, 8, 0);
+	cv::namedWindow("Xreflect");
+	cv::imshow("Xreflect",gMatFlipImage);
+}
+
+void Rotate( ){
+	cv::Point rpoint1, rpoint2;
+	double radian =90*pi/180.0,
+		   cc = cos(radian), ss = sin(-radian);
+	double xcenter = (double)(point2.x+point1.x)/2.0, ycenter = (double)(point2.y+point1.y)/2.0;
+	
+	for(int i=0; i< gMatImage.cols; i++){
+		for(int j=0; j< gMatImage.rows; j++){
+
+		gMatFlipImage.at <cv ::Vec3b > (j,i) =  gMatImage.at <cv::Vec3b> (j,i);
+		
+		}
+	}
+	rpoint1.y=(int)(ycenter+((double)point1.y-ycenter)*cc-((double)point1.x-xcenter)*ss);
+	rpoint1.x=(int)(xcenter+((double)point1.y-ycenter)*ss-((double)point1.x-xcenter)*cc);
+	for(int i=point1.x; i< point2.x; i++){
+		for(int j=point1.y; j< point2.y; j++){
+		 gMatFlipImage.at <cv::Vec3b> (
+				rpoint2.y=(int)(ycenter+((double)j-ycenter)*cc-((double)i-xcenter)*ss),
+				rpoint2.x=(int)(xcenter+((double)j-ycenter)*ss-((double)i-xcenter)*cc)
+					
+			)=gMatImage.at <cv ::Vec3b > (j,i);
+		}
+	}
+
+	cv::rectangle(gMatFlipImage, rpoint1, rpoint2, CV_RGB(0, 255, 0), 3, 8, 0);
+	cv::namedWindow("Rotate");
+	cv::imshow("Rotate",gMatFlipImage);
+}
+
+void Resize(){
+	cv::Point rpoint1, rpoint2;
+	cv::Mat preResize = cv::Mat::zeros(point2.y-point1.y,point2.x-point1.x,CV_8UC3);
+	cv::Mat rearResize;
+	for(int i=point1.x; i< point2.x; i++){
+		for(int j=point1.y; j< point2.y; j++){
+			preResize.at <cv ::Vec3b > (j-point1.y,i-point1.x) =  gMatImage.at <cv::Vec3b> (j,i);
+		}
+	}
+	for(int i=0; i< gMatImage.cols; i++){
+		for(int j=0; j< gMatImage.rows; j++){
+
+		gMatFlipImage.at <cv ::Vec3b > (j,i) =  gMatImage.at <cv::Vec3b> (j,i);
+		
+		}
+	}
+
+	float scale = 1.5;
+	int boxWidth = (int)((point2.x-point1.x) * scale);
+	int boxHeight = (int)((point2.y-point1.y)  * scale);
+    cv::resize(preResize,rearResize, cv::Size(boxWidth, boxHeight));
+	rpoint1.x=point1.x;
+	rpoint1.y=point1.y;
+	rpoint2.x=rearResize.cols+point1.x;
+	rpoint2.y=rearResize.rows+point1.y;
+	for(int i=0; i< rearResize.cols; i++){
+		for(int j=0; j< rearResize.rows; j++){
+		//printf("%d %d\n",i,j);
+		gMatFlipImage.at <cv::Vec3b> (point1.y+j,point1.x+i) =  rearResize.at <cv::Vec3b> (j,i);
+		
+		}
+	}
+
+	cv::rectangle(gMatFlipImage, rpoint1, rpoint2, CV_RGB(0, 255, 0), 3, 8, 0);
+	cv::namedWindow("Resize2");
+	cv::imshow("Resize2",gMatFlipImage);
+}
+
+void on_mouse(int event, int x, int y, int flags, void* params){
+	
+	if (event == CV_EVENT_LBUTTONDOWN && !drag && !select_flag)
+	{
+		/* left button clicked. ROI selection begins */
+		point1 = cv::Point(x, y);
+		drag = 1;
+	}
+
+	if (event == CV_EVENT_MOUSEMOVE && drag && !select_flag)
+	{
+		 /* mouse dragged. ROI being selected */
+		cv::Mat img1 = gMatImage.clone();
+		point2 = cv::Point(x, y);
+		//printf("test\n");
+		cv::rectangle(img1, point1, point2, CV_RGB(255, 0, 0), 3, 8, 0);
+		cv::imshow("image", img1);
+	}
+
+	if (event == CV_EVENT_LBUTTONUP && drag && !select_flag)
+	{
+		cv::Mat img2 = gMatImage.clone();
+		point2 = cv::Point(x, y);
+		drag = 0;
+		select_flag = 1;
+		cv::rectangle(img2, point1, point2, CV_RGB(255, 0, 0), 3, 8, 0);
+		cv::imshow("image", img2);
+		callback = true;
+		Yreflect();
+		Xreflect();
+		Rotate();
+		Resize();
+	}
+}
+
+
+
+
+int main(int argc, char *argv[])
+{
+	box = cvRect(-1, -1, 0, 0);
+
+	gMatImage = cv::imread("aaa.jpg",1);
+	gMatFlipImage = cv::Mat::zeros(gMatImage.size(),gMatImage.type());
+	
+	
+	cv::namedWindow("image");
+	cv::setMouseCallback("image",on_mouse);
+	cv::imshow("image", gMatImage);
+	
+	
+    
+	cv::waitKey(0);	
+	
+	
+
+    return 0;
 }
